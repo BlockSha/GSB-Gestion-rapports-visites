@@ -57,7 +57,6 @@ export class Database {
       this.isConnected = true;
      
       console.log('Connexion à MongoDB Atlas réussie');
-      console.log(`Base de données : ${mongoose.connection.db.databaseName}`);
     } catch (error) {
       console.error('Erreur de connexion à MongoDB:', error);
       process.exit(1);
