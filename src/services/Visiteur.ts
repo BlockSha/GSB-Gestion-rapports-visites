@@ -1,0 +1,104 @@
+// src/services/Visiteur.ts
+import { VisiteurModel, IVisiteurDocument } from '../models/Visiteur';
+import { ICreateVisiteur } from '../models/interfaces/IVisiteur';
+
+/**
+ * Service pour gérer la logique métier des visiteurs
+ */
+export class VisiteurService {
+
+    /**
+     * Créer un nouveau visiteur
+     */
+    public async createVisiteur(data: ICreateVisiteur): Promise<IVisiteurDocument> {
+        try {
+            // Vérifier si l'email existe déjà
+            const existingVisiteur = await VisiteurModel.findOne({ email: data.email });
+            if (existingVisiteur) {
+                throw new Error(`Un visiteur avec l'email ${data.email} existe déjà`);
+            }
+
+            // Créer et sauvegarder le visiteur
+            const visiteur = new VisiteurModel(data);
+            await visiteur.save();
+            return visiteur;
+        } catch (error: any) {
+            if (error.name === 'ValidationError') {
+                const messages = Object.values(error.errors).map((err: any) => err.message);
+                throw new Error(`Validation échouée: ${messages.join(', ')}`);
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Récupérer tous les visiteurs
+     */
+    public async getAllVisiteurs(): Promise<IVisiteurDocument[]> {
+        try {
+            return await VisiteurModel.find().sort({ dateCreation: -1 }).exec();
+        } catch (error) {
+            throw new Error('Erreur lors de la récupération des visiteurs');
+        }
+    }
+
+    /**
+     * Récupérer un visiteur par son ID
+     */
+    public async getVisiteurById(id: string): Promise<IVisiteurDocument | null> {
+        try {
+            const visiteur = await VisiteurModel.findById(id).exec();
+            if (!visiteur) {
+                throw new Error(`Visiteur avec l'ID ${id} introuvable`);
+            }
+            return visiteur;
+        } catch (error: any) {
+            if (error.name === 'CastError') {
+                throw new Error(`ID invalide: ${id}`);
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Mettre à jour un visiteur par son ID
+     */
+    public async updateVisiteur(id: string, data: Partial<ICreateVisiteur>): Promise<IVisiteurDocument | null> {
+        try {
+            const visiteur = await VisiteurModel.findByIdAndUpdate(id, data, {
+                new: true,
+                runValidators: true
+            }).exec();
+
+            if (!visiteur) {
+                throw new Error(`Visiteur avec l'ID ${id} introuvable`);
+            }
+            return visiteur;
+        } catch (error: any) {
+            if (error.name === 'CastError') {
+                throw new Error(`ID invalide: ${id}`);
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Supprimer un visiteur par son ID
+     */
+    public async deleteVisiteur(id: string): Promise<void> {
+        try {
+            const visiteur = await VisiteurModel.findByIdAndDelete(id).exec();
+            if (!visiteur) {
+                throw new Error(`Visiteur avec l'ID ${id} introuvable`);
+            }
+        } catch (error: any) {
+            if (error.name === 'CastError') {
+                throw new Error(`ID invalide: ${id}`);
+            }
+            throw error;
+        }
+    }
+}
+
+// Export d'une instance unique
+export default new VisiteurService();

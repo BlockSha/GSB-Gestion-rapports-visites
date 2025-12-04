@@ -1,7 +1,7 @@
-// routes/visiteur.routes.js
-const express = require('express');
-const router = express.Router();
-const VisiteurController = require('../controllers/visiteur');
+import { Router } from 'express';
+import VisiteurController from '../controllers/Visiteur';
+
+const router = Router();
 
 router.post('/', VisiteurController.create);
 router.get('/', VisiteurController.getAll);
@@ -9,4 +9,4 @@ router.get('/:id', VisiteurController.getById);
 router.put('/:id', VisiteurController.update);
 router.delete('/:id', VisiteurController.delete);
 
-module.exports = router;
+export default router;

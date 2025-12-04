@@ -1,12 +1,12 @@
+// src/controllers/Visite.ts
 import { Request, Response } from 'express';
-const VisiteurService: any = require('../services/Visiteur');
+import VisiteService from '../services/Visite';
 
-class VisiteurController {
-
+class VisiteController {
     async create(req: Request, res: Response) {
         try {
-            const visiteur = await VisiteurService.createVisiteur(req.body);
-            res.status(201).json(visiteur);
+            const visite = await VisiteService.createVisite(req.body);
+            res.status(201).json(visite);
         } catch (error: any) {
             res.status(400).json({ error: error.message });
         }
@@ -14,8 +14,8 @@ class VisiteurController {
 
     async getAll(_req: Request, res: Response) {
         try {
-            const visiteurs = await VisiteurService.getAllVisiteurs();
-            res.status(200).json(visiteurs);
+            const visites = await VisiteService.getAllVisites();
+            res.status(200).json(visites);
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
@@ -23,8 +23,8 @@ class VisiteurController {
 
     async getById(req: Request, res: Response) {
         try {
-            const visiteur = await VisiteurService.getVisiteurById((req.params as any).id);
-            res.status(200).json(visiteur);
+            const visite = await VisiteService.getVisiteById(req.params.id);
+            res.status(200).json(visite);
         } catch (error: any) {
             res.status(404).json({ error: error.message });
         }
@@ -32,8 +32,8 @@ class VisiteurController {
 
     async update(req: Request, res: Response) {
         try {
-            const visiteur = await VisiteurService.updateVisiteur((req.params as any).id, req.body);
-            res.status(200).json(visiteur);
+            const visite = await VisiteService.updateVisite(req.params.id, req.body);
+            res.status(200).json(visite);
         } catch (error: any) {
             res.status(400).json({ error: error.message });
         }
@@ -41,7 +41,7 @@ class VisiteurController {
 
     async delete(req: Request, res: Response) {
         try {
-            await VisiteurService.deleteVisiteur((req.params as any).id);
+            await VisiteService.deleteVisite(req.params.id);
             res.status(204).send();
         } catch (error: any) {
             res.status(404).json({ error: error.message });
@@ -49,4 +49,4 @@ class VisiteurController {
     }
 }
 
-export default new VisiteurController();
+export default new VisiteController();

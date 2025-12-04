@@ -50,7 +50,7 @@ export class Database {
 
 
       const encodedPassword = encodeURIComponent(dbPassword);
-      const mongoUri = `mongodb+srv://${dbUsername}:${encodedPassword}@cluster0.7xtdxoh.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
+      const mongoUri = `mongodb+srv://${dbUsername}:${encodedPassword}@api-rest-cours.zmsfyav.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=Cluster0`;
 
 
       await mongoose.connect(mongoUri);
