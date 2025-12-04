@@ -1,6 +1,6 @@
 // src/services/Visite.ts
 import { VisiteModel, IVisiteDocument } from '../models/Visite';
-import { ICreateVisite } from '../interfaces/IVisite';
+import { ICreateVisite } from '../models/interfaces/IVisite';
 
 export class VisiteService {
 
