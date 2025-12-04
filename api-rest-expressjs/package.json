@@ -1,10 +1,10 @@
 {
-  "name": "api-rest-expressjs",
+  "name": "GSB-Gestion-rapports-visites",
   "version": "1.0.0",
   "description": "API REST with Express.js, TypeScript, and MongoDB",
-  "main": "dist/server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -20,9 +20,15 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mongoose": "^9.0.0"
+    "mongodb": "^7.0.0",
+    "mongoose": "^8.19.3"
   },
   "devDependencies": {
-    "@types/express": "^5.0.5"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }

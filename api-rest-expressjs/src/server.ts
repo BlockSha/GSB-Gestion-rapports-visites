@@ -3,6 +3,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Database } from './config/database';
 import { UserRoutes } from './routes/User';
+// Use require to avoid "file is not a module" TypeScript error if the route file does not export symbols.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// @ts-ignore
+const { VisiteurRoutes } = require('./routes/Visiteur');
 
 
 // Chargement des variables d'environnement
@@ -72,7 +76,12 @@ class App {
      // Routes utilisateurs
     const userRoutes = new UserRoutes();
     this.app.use('/api/users', userRoutes.router);
+  
+
+    const visiteurRoutes = new VisiteurRoutes();
+    this.app.use('/api/visiteurs', visiteurRoutes.router);
   }
+
 
   
   /**
